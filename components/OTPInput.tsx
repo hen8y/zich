@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
-import { View, TextInput, Pressable, Clipboard, Keyboard } from "react-native";
-import { ThemedText } from "./theme/ThemedText";
+import { View, TextInput, Keyboard, Pressable } from "react-native";
+import { ThemedText } from "./theme/ThemeUi";
+import * as Clipboard from "expo-clipboard";
 
 interface OTPInputProps {
     length?: number;
@@ -14,7 +15,7 @@ export default function OTPInput({ length = 4, onComplete }: OTPInputProps) {
 
     const handlePaste = async () => {
         try {
-            const content = await Clipboard.getString();
+            const content = await Clipboard.getStringAsync();
             const numericContent = content.replace(/[^0-9]/g, "");
 
             if (numericContent.length >= length) {
@@ -22,6 +23,7 @@ export default function OTPInput({ length = 4, onComplete }: OTPInputProps) {
                 setOtp(otpArray);
                 onComplete?.(otpArray.join(""));
                 inputRefs.current[length - 1].focus();
+                Keyboard.dismiss();
             }
         } catch (error) {
             console.error("Failed to paste OTP:", error);
@@ -51,14 +53,14 @@ export default function OTPInput({ length = 4, onComplete }: OTPInputProps) {
 
     return (
         <View>
-            <View className="flex-row justify-center mt-6 items-center gap-2">
+            <View className="flex-row mt-6 items-center gap-2">
                 {otp.map((digit, index) => (
                     <TextInput
                         key={index}
                         ref={(ref) => {
                             if (ref) inputRefs.current[index] = ref;
                         }}
-                        className={`size-16 border-2 rounded-full text-center text-3xl font-semibold text-primary bg-white ${
+                        className={`size-16 border rounded-lg text-center text-3xl font-semibold text-primary bg-white ${
                             focusedIndex === index
                                 ? "border-primary"
                                 : "border-gray-300"
@@ -75,9 +77,9 @@ export default function OTPInput({ length = 4, onComplete }: OTPInputProps) {
                     />
                 ))}
             </View>
-            <Pressable onPress={handlePaste} className="mt-3 ml-auto">
+            <Pressable onPress={handlePaste} className="mt-1">
                 <ThemedText
-                    className="text-primary font-semibold text-center"
+                    className="text-primary text-sm font-semibold"
                     content="Paste code"
                 />
             </Pressable>

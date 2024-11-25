@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 .container {
-    @apply flex-1 bg-white;
+    @apply flex-1 bg-theme;
 }
 .center {
-    @apply items-center justify-center
+    @apply items-center justify-center;
 }
 .space {
-    @apply items-center justify-between
+    @apply items-center justify-between;
 }
 .btn {
     @apply rounded-full p-4 center;
@@ -18,5 +18,5 @@
     @apply text-4xl mt-3 text-neutral-800 font-bold;
 }
 .input {
-    @apply p-2 px-5 placeholder:text-neutral-500 border mt-2 text-neutral-800 border-neutral-300 h-16 rounded-lg;
+    @apply p-2 px-5 border mt-2 leading-none text-neutral-800 bg-white border-neutral-300 h-16 rounded-lg;
 }

@@ -49,10 +49,14 @@ export default function Login(): JSX.Element {
                         />
                     </View>
 
-                    <TouchableOpacity className="bg-primary w-full mt-16 py-5 btn shadow-md">
+                    <TouchableOpacity 
+                        onPress={handleLogin}
+                        className={`${isLoading ? 'bg-neutral-400 border border-neutral-500' : 'bg-primary shadow-md'} w-full mt-16 py-5 btn`}
+                        disabled={isLoading}
+                        >
                         <ThemedText
                             content="Sign In"
-                            className="text-white font-medium text-xl"
+                            className={`${isLoading ? 'text-neutral-700' : 'text-white'} font-medium text-xl`}
                         />
                     </TouchableOpacity>
 
@@ -81,7 +85,7 @@ export default function Login(): JSX.Element {
             </View>
             <View className="center flex-row gap-x-1 flex-1 absolute bottom-20">
                 <ThemedText content="Don't have an account?" />
-                <TouchableOpacity onPress={() => router.push("./register")}>
+                <TouchableOpacity onPress={() => router.replace("./register")}>
                     <ThemedText
                         content="Sign up"
                         className="text-black underline font-semibold"

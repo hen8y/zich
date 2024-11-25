@@ -18,7 +18,7 @@ export default function Register(): JSX.Element {
         }, 2000);
     };
 
-    const handleEdit = () => {
+    const handleGoBack = () => {
         setStep(1);
     };
 
@@ -48,7 +48,7 @@ export default function Register(): JSX.Element {
                     className="text-3xl font-semibold"
                 />
 
-                <View className="flex-row mt-7 w-full">
+                <View className="flex-row mt-7 gap-2 w-full">
                     {[1, 2, 3].map((i) => (
                         <View
                             key={i}
@@ -56,20 +56,25 @@ export default function Register(): JSX.Element {
                                 step === i
                                     ? "bg-primary rounded-full"
                                     : "bg-secondary"
-                            } w-32`}
+                            } w-12`}
                         ></View>
                     ))}
                 </View>
             </View>
             {step === 1 ? (
-                <EmailForm handleFirstForm={handleFirstForm} />
+                <EmailForm 
+                    isLoading={isLoading}
+                    handleFirstForm={handleFirstForm} />
             ) : step === 2 ? (
                 <VerificationForm
+                    isLoading={isLoading}
                     handleVerificationForm={handleVerificationForm}
-                    handleEdit={handleEdit}
+                    handleGoBack={handleGoBack}
                 />
             ) : (
-                <PasswordForm handlePasswordForm={handlePasswordForm} />
+                <PasswordForm
+                    isLoading={isLoading}
+                    handlePasswordForm={handlePasswordForm} />
             )}
         </ThemedView>
     );

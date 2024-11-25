@@ -3,10 +3,12 @@ import { ThemedText } from "../theme/ThemeUi";
 
 interface PasswordFormProps {
     handlePasswordForm: () => void;
+    isLoading: boolean;
 }
 
 export default function PasswordForm({
     handlePasswordForm,
+    isLoading,
 }: PasswordFormProps): JSX.Element {
     return (
         <>
@@ -35,11 +37,18 @@ export default function PasswordForm({
             <View className="flex-1 absolute bottom-20 w-full px-5 gap-y-4">
                 <TouchableOpacity
                     onPress={handlePasswordForm}
-                    className="bg-primary w-full py-5 btn shadow-md"
+                    className={`${
+                        isLoading
+                            ? "bg-neutral-400 border border-neutral-500"
+                            : "bg-primary shadow-md"
+                    } w-full mt-16 py-5 btn`}
+                    disabled={isLoading}
                 >
                     <ThemedText
                         content="Sign Up"
-                        className="text-white font-medium text-xl"
+                        className={`${
+                            isLoading ? "text-neutral-700" : "text-white"
+                        } font-medium text-xl`}
                     />
                 </TouchableOpacity>
             </View>

@@ -9,10 +9,12 @@ import RoundedCheckbox from "../RoundedCheckbox";
 
 interface EmailFormProps {
     handleFirstForm: () => void;
+    isLoading: boolean;
 }
 
 export default function EmailForm({
     handleFirstForm,
+    isLoading,
 }: EmailFormProps): JSX.Element {
     return (
         <>
@@ -20,7 +22,7 @@ export default function EmailForm({
                 <View className="mt-10">
                     <ThemedText content="Username" className="font-semibold" />
                     <TextInput
-                        className="input"
+                        className="input leading-normal"
                         placeholder="Choose Username"
                     />
                 </View>
@@ -34,16 +36,23 @@ export default function EmailForm({
                 <RoundedCheckbox label="I accept the terms and privacy policy" />
                 <TouchableOpacity
                     onPress={handleFirstForm}
-                    className="bg-primary w-full py-5 btn shadow-md"
+                    className={`${
+                        isLoading
+                            ? "bg-neutral-400 border border-neutral-500"
+                            : "bg-primary shadow-md"
+                    } w-full mt-16 py-5 btn`}
+                    disabled={isLoading}
                 >
                     <ThemedText
                         content="Proceed"
-                        className="text-white font-medium text-xl"
+                        className={`${
+                            isLoading ? "text-neutral-700" : "text-white"
+                        } font-medium text-xl`}
                     />
                 </TouchableOpacity>
                 <View className="center flex-row gap-x-1">
                     <ThemedText content="Already have an account?" />
-                    <TouchableOpacity onPress={() => router.push("./register")}>
+                    <TouchableOpacity onPress={() => router.replace("./login")}>
                         <ThemedText
                             content="Log in"
                             className="text-black underline font-semibold"

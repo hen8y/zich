@@ -11,8 +11,8 @@ export default function NotFoundScreen(): JSX.Element
                 className="size-60 absolute top-40"
             />
             <View className="mt-32 center">
-                <ThemedText className="text-neutral-500" content="This screen doesn't exist." />
-                <ThemedText className="text-neutral-500" content="Go to home screen!" />
+                <ThemedText className="text-neutral-400" content="This screen doesn't exist." />
+                <ThemedText className="text-neutral-400" content="Go to home screen!" />
                 <Pressable 
                     onPress={() => router.replace('./')}
                     className="btn shadow-md px-10 mt-7 bg-primary">

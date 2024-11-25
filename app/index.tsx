@@ -12,7 +12,7 @@ export default function Index(): JSX.Element {
                 <ThemedText content={APP.APP_NAME} className="logo" />
                 <View className="mt-4 gap-y-4 w-full">
                     <TouchableOpacity
-                        onPress={() => router.push("/login")}
+                        onPress={() => router.replace("/login")}
                         className="bg-primary w-full py-5 btn"
                     >
                         <ThemedText
@@ -22,7 +22,7 @@ export default function Index(): JSX.Element {
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        onPress={() => router.push("/register")}
+                        onPress={() => router.replace("/register")}
                         className="bg-secondary w-full py-5 btn"
                     >
                         <ThemedText

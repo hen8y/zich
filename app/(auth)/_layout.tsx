@@ -12,10 +12,6 @@ export default function AuthLayout(): JSX.Element
                 name="forgot-password"
                 options={{ headerShown: false }}
             />
-            <Stack.Screen
-                name="verification"
-                options={{ headerShown: false }}
-            />
         </Stack>
     );
 }

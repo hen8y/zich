@@ -4,26 +4,28 @@ import OTPInput from "../OTPInput";
 
 interface VerificationFormProps {
     handleVerificationForm: () => void;
-    handleEdit: () => void;
+    handleGoBack: () => void;
+    isLoading: boolean;
 }
 
 export default function VerificationForm({
     handleVerificationForm,
-    handleEdit,
+    handleGoBack,
+    isLoading,
 }: VerificationFormProps): JSX.Element {
     return (
         <>
-            <View className="px-5 w-full center mt-10">
+            <View className="px-5 w-full mt-10">
                 <ThemedText
-                    content="OTP Verification"
+                    content="Enter confirmation code"
                     className="font-bold text-2xl"
                 />
                 <ThemedText
-                    content="Enter OTP Sent to your Email"
-                    className="text-neutral-500 mt-2"
+                    content="We sent a code to your email"
+                    className="text-neutral-400 mt-2"
                 />
                 <OTPInput />
-                <View className="center flex-row gap-x-1 mt-5">
+                <View className="flex-row gap-x-1 mt-5">
                     <ThemedText content="Didn't get the code?" />
                     <TouchableOpacity>
                         <ThemedText
@@ -36,22 +38,29 @@ export default function VerificationForm({
 
             <View className="flex-1 flex-row absolute bottom-20 w-full px-5 gap-x-4">
                 <TouchableOpacity
-                    onPress={handleEdit}
-                    className="bg-secondary w-32 py-5 btn border border-neutral-300"
+                    onPress={handleGoBack}
+                    className="bg-secondary w-36 py-5 btn border border-neutral-300"
                 >
                     <ThemedText
-                        content="Edit"
+                        content="Go back"
                         className="text-primary font-medium text-xl"
                     />
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={handleVerificationForm}
-                    className="bg-primary flex-1 py-5 btn shadow-md"
+                    className={`${
+                        isLoading
+                            ? "bg-neutral-400 border border-neutral-500"
+                            : "bg-primary shadow-md"
+                    } flex-1 py-5 btn`}
+                    disabled={isLoading}
                 >
                     <ThemedText
                         content="Proceed"
-                        className="text-white font-medium text-xl"
+                        className={`${
+                            isLoading ? "text-neutral-700" : "text-white"
+                        } font-medium text-xl`}
                     />
                 </TouchableOpacity>
             </View>
