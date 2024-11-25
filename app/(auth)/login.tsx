@@ -2,10 +2,21 @@ import { Image, TextInput, TouchableOpacity, View } from "react-native";
 import { ThemedText, ThemedView } from "@/components/theme/ThemeUi";
 import { Iconify } from "react-native-iconify";
 import { router } from "expo-router";
+import { useState } from "react";
 
 export default function Login(): JSX.Element {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    const handleLogin = () => {
+        setIsLoading(true);
+        setTimeout(() => {
+            setIsLoading(false);
+            router.replace("/home");
+        }, 2000);
+    };
+
     return (
-        <ThemedView className="items-center pt-20">
+        <ThemedView isLoading={isLoading} className="items-center pt-20">
             <View className="size-20 mx-auto rounded-full p-3 bg-neutral-200 center">
                 <Image source={require("@/assets/images/logo.png")} />
             </View>
@@ -69,10 +80,10 @@ export default function Login(): JSX.Element {
                 </View>
             </View>
             <View className="center flex-row gap-x-1 flex-1 absolute bottom-20">
-                <ThemedText content="Already have an account?" />
-                <TouchableOpacity onPress={() => router.push('./register')}>
+                <ThemedText content="Don't have an account?" />
+                <TouchableOpacity onPress={() => router.push("./register")}>
                     <ThemedText
-                        content="Log in"
+                        content="Sign up"
                         className="text-black underline font-semibold"
                     />
                 </TouchableOpacity>
