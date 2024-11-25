@@ -1,10 +1,10 @@
-import { Image, TouchableOpacity, View } from "react-native";
-import { ThemedText, ThemedView } from "@/components/theme/ThemeUi";
-import { Iconify } from "react-native-iconify";
+import { CustomTextInput, PasswordInput } from "@/components/inputs";
+import { ThemedText } from "@/components/theme";
+import { AuthThemedView } from "@/components/theme/auth-theme-view";
 import { Link, router } from "expo-router";
 import { useState } from "react";
-import CustomTextInput from "@/components/inputs/CustomTextInput";
-import PasswordInput from "@/components/inputs/PasswordInput";
+import { Image, TouchableOpacity, View } from "react-native";
+import { Iconify } from "react-native-iconify";
 
 export default function Login(): JSX.Element {
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -22,7 +22,7 @@ export default function Login(): JSX.Element {
     };
 
     return (
-        <ThemedView isLoading={isLoading} className="items-center pt-20">
+        <AuthThemedView isLoading={isLoading} className="items-center pt-20">
             <View className="size-20 mx-auto rounded-full p-3 bg-neutral-200 center">
                 <Image source={require("@/assets/images/logo.png")} />
             </View>
@@ -94,7 +94,7 @@ export default function Login(): JSX.Element {
                     </View>
                 </View>
             </View>
-            <View className="center flex-row gap-x-1 flex-1 absolute bottom-20">
+            <View className="center flex-row gap-x-1 flex-1">
                 <ThemedText content="Don't have an account?" />
                 <TouchableOpacity onPress={() => router.replace("./register")}>
                     <ThemedText
@@ -103,6 +103,6 @@ export default function Login(): JSX.Element {
                     />
                 </TouchableOpacity>
             </View>
-        </ThemedView>
+        </AuthThemedView>
     );
 }

@@ -1,8 +1,8 @@
 import { Image, TouchableOpacity, View } from "react-native";
 
-import { ThemedText, ThemedView } from "@/components/theme/ThemeUi";
+import { ThemedText, ThemedView } from "@/components/theme";
 import { router } from "expo-router";
-import { APP } from '@/constants';
+import { APP } from "@/constants";
 
 export default function Index(): JSX.Element {
     return (

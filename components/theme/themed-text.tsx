@@ -2,10 +2,14 @@ import { Text, type TextProps } from "react-native";
 
 type ThemedTextProps = TextProps & {
     className?: string;
-    content?: string
+    content?: string;
 };
 
-export function ThemedText({ className, content, ...props }: ThemedTextProps) {
+export function ThemedText({
+    className,
+    content,
+    ...props
+}: ThemedTextProps): JSX.Element {
     const hasTextSize = className
         ?.split(" ")
         .some((c) =>

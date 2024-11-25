@@ -1,9 +1,10 @@
 import { View, ViewProps } from "react-native";
+import { Dispatch, SetStateAction } from "react";
 import Spinner from "react-native-loading-spinner-overlay";
 type ThemedViewProps = ViewProps & {
     className?: string;
     isLoading?: boolean;
-    setIsLoading?: (isLoading: boolean) => void;
+    setIsLoading?: Dispatch<SetStateAction<boolean>>;
 };
 
 export function ThemedView({
@@ -11,7 +12,7 @@ export function ThemedView({
     isLoading,
     setIsLoading,
     ...props
-}: ThemedViewProps) {
+}: ThemedViewProps): JSX.Element {
     return (
         <View className="container justify-center items-center">
             <Spinner

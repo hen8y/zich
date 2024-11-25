@@ -1,6 +1,6 @@
-import CustomTextInput from "@/components/inputs/CustomTextInput";
-import { ThemedView } from "@/components/theme/ThemeUi";
-import { ThemedText } from "@/components/theme/ThemeUi";
+import CustomTextInput from "@/components/inputs/custom-text-input";
+import { ThemedView } from "@/components/theme";
+import { ThemedText } from "@/components/theme";
 import { router } from "expo-router";
 import { useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";

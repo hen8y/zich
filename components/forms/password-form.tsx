@@ -1,8 +1,10 @@
-import { ScrollView, TouchableOpacity, View } from "react-native";
-import { SetStateAction, Dispatch } from "react";
-import { ThemedText } from "../theme/ThemeUi";
 import { RegisterFormType } from "@/app/(auth)/register";
-import PasswordInput from "../inputs/PasswordInput";
+import useKeyboard from "@/hooks/use-keyboard";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Keyboard, ScrollView, TouchableOpacity, View } from "react-native";
+
+import { PasswordInput } from "../inputs";
+import { ThemedText } from "../theme";
 
 interface PasswordFormProps {
     handlePasswordForm: () => void;
@@ -17,9 +19,13 @@ export default function PasswordForm({
     form,
     setForm,
 }: PasswordFormProps): JSX.Element {
+    const isKeyboardVisible = useKeyboard();
     return (
-        <ScrollView contentContainerClassName="flex-grow">
-            <View className="px-5 w-full mt-10">
+        <>
+            <ScrollView
+                contentContainerClassName="flex-grow"
+                className="px-5 w-full mt-10"
+            >
                 <ThemedText
                     content="Create password"
                     className="font-bold text-2xl"
@@ -44,26 +50,28 @@ export default function PasswordForm({
                     placeholder="Confirm your password"
                     value={form.confirmPassword}
                 />
-            </View>
+            </ScrollView>
 
-            <View className="flex-1 absolute bottom-20 w-full px-5 gap-y-4">
-                <TouchableOpacity
-                    onPress={handlePasswordForm}
-                    className={`${
-                        isLoading
-                            ? "bg-neutral-400 border border-neutral-500"
-                            : "bg-primary shadow-md"
-                    } w-full mt-16 py-5 btn`}
-                    disabled={isLoading}
-                >
-                    <ThemedText
-                        content="Sign Up"
+            {!isKeyboardVisible && (
+                <View className="mb-10 w-full px-5 gap-y-4">
+                    <TouchableOpacity
+                        onPress={handlePasswordForm}
                         className={`${
-                            isLoading ? "text-neutral-700" : "text-white"
-                        } font-medium text-xl`}
-                    />
-                </TouchableOpacity>
-            </View>
-        </ScrollView>
+                            isLoading
+                                ? "bg-neutral-400 border border-neutral-500"
+                                : "bg-primary shadow-md"
+                        } w-full mt-16 py-5 btn`}
+                        disabled={isLoading}
+                    >
+                        <ThemedText
+                            content="Sign Up"
+                            className={`${
+                                isLoading ? "text-neutral-700" : "text-white"
+                            } font-medium text-xl`}
+                        />
+                    </TouchableOpacity>
+                </View>
+            )}
+        </>
     );
 }

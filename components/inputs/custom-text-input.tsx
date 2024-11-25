@@ -1,5 +1,5 @@
 import { View, TextInput } from "react-native";
-import { ThemedText } from "../theme/ThemeUi";
+import { ThemedText } from "../theme";
 
 interface CustomTextInputProps {
     label: string;
@@ -19,7 +19,7 @@ export default function CustomTextInput({
     containerClassName,
     inputClassName,
     hideLabel = false,
-}: CustomTextInputProps) {
+}: CustomTextInputProps): JSX.Element {
     return (
         <View className={`w-full ${containerClassName}`}>
             <ThemedText className={`${hideLabel ? "hidden" : ""} input-label`}>
@@ -29,6 +29,7 @@ export default function CustomTextInput({
                 onChangeText={handleChangeText}
                 placeholder={placeholder || ""}
                 value={value}
+                placeholderTextColor={"#aaa"}
                 className={`input ${inputClassName || ""}`}
             />
         </View>

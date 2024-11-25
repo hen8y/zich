@@ -1,10 +1,11 @@
-import { ThemedText, ThemedView } from "@/components/theme/ThemeUi";
+import { ThemedText, ThemedView } from "@/components/theme";
 import { useState } from "react";
 import { Image, View } from "react-native";
-import EmailForm from "@/components/register/EmailForm";
-import PasswordForm from "@/components/register/PasswordForm";
-import VerificationForm from "@/components/register/VerificationForm";
+import EmailForm from "@/components/forms/email-form";
+import PasswordForm from "@/components/forms/password-form";
+import VerificationForm from "@/components/forms/verification-form";
 import { router } from "expo-router";
+import { AuthThemedView } from "@/components/theme/auth-theme-view";
 
 export type RegisterFormType = {
     email: string;
@@ -22,7 +23,6 @@ export default function Register(): JSX.Element {
         password: "",
         confirmPassword: "",
     });
-
     const handleFirstForm = () => {
         setIsLoading(true);
         setTimeout(() => {
@@ -51,7 +51,7 @@ export default function Register(): JSX.Element {
         }, 1000);
     };
     return (
-        <ThemedView isLoading={isLoading} className="items-center pt-20">
+        <AuthThemedView isLoading={isLoading} className="items-center pt-20">
             <View className="size-20 mx-auto rounded-full p-3 bg-neutral-200 center">
                 <Image source={require("@/assets/images/logo.png")} />
             </View>
@@ -95,6 +95,6 @@ export default function Register(): JSX.Element {
                     handlePasswordForm={handlePasswordForm}
                 />
             )}
-        </ThemedView>
+        </AuthThemedView>
     );
 }

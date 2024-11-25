@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { View, TextInput, Keyboard, Pressable } from "react-native";
-import { ThemedText } from "./theme/ThemeUi";
+import { ThemedText } from "../theme";
 import * as Clipboard from "expo-clipboard";
 
 interface OTPInputProps {
@@ -8,7 +8,10 @@ interface OTPInputProps {
     onComplete?: (otp: string) => void;
 }
 
-export default function OTPInput({ length = 4, onComplete }: OTPInputProps) {
+export default function OTPInput({
+    length = 4,
+    onComplete,
+}: OTPInputProps): JSX.Element {
     const [otp, setOtp] = useState<string[]>(new Array(length).fill(""));
     const [focusedIndex, setFocusedIndex] = useState<number>(-1);
     const inputRefs = useRef<TextInput[]>([]);
