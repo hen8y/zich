@@ -8,9 +8,15 @@
 .center {
     @apply items-center justify-center
 }
+.space {
+    @apply items-center justify-between
+}
 .btn {
     @apply rounded-full p-4 center;
 }
 .logo {
     @apply text-4xl mt-3 text-neutral-800 font-bold;
+}
+.input {
+    @apply p-2 px-5 placeholder:text-neutral-500 border mt-2 text-neutral-800 border-neutral-300 h-16 rounded-lg;
 }

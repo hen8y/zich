@@ -13,7 +13,7 @@ export function ThemedText({ className, content, ...props }: ThemedTextProps) {
         );
     return (
         <Text
-            className={`${
+            className={`text-neutral-800 ${
                 hasTextSize ? hasTextSize : "text-lg"
             } ${className}`}
             {...(content ? { children: content } : props)}
