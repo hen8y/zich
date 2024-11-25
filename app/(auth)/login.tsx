@@ -1,11 +1,17 @@
-import { Image, TextInput, TouchableOpacity, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import { ThemedText, ThemedView } from "@/components/theme/ThemeUi";
 import { Iconify } from "react-native-iconify";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import { useState } from "react";
+import CustomTextInput from "@/components/inputs/CustomTextInput";
+import PasswordInput from "@/components/inputs/PasswordInput";
 
 export default function Login(): JSX.Element {
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [form, setForm] = useState<{ email: string; password: string }>({
+        email: "",
+        password: "",
+    });
 
     const handleLogin = () => {
         setIsLoading(true);
@@ -27,36 +33,41 @@ export default function Login(): JSX.Element {
                 />
 
                 <View className="mt-10">
-                    <View>
-                        <ThemedText content="Email" className="font-semibold" />
-                        <TextInput
-                            className="input"
-                            autoCapitalize="none"
-                            placeholder="Your email"
-                            inputMode="email"
-                        />
-                    </View>
-
-                    <View className="mt-7">
+                    <CustomTextInput
+                        handleChangeText={(e) => setForm({ ...form, email: e })}
+                        label="Password"
+                        placeholder="Your email"
+                        value={form.email}
+                    />
+                    <PasswordInput
+                        handleChangeText={(e) =>
+                            setForm({ ...form, password: e })
+                        }
+                        label="Password"
+                        containerClassName="mt-7"
+                        placeholder="Enter your password"
+                        value={form.password}
+                    />
+                    <Link href={"/forgot-password"} className="mt-2 ml-auto">
                         <ThemedText
-                            content="Password"
-                            className="font-semibold"
+                            className="text-primary font-semibold"
+                            content="Forgot Password?"
                         />
-                        <TextInput
-                            className="input"
-                            placeholder="Enter your password"
-                            secureTextEntry={true}
-                        />
-                    </View>
-
-                    <TouchableOpacity 
+                    </Link>
+                    <TouchableOpacity
                         onPress={handleLogin}
-                        className={`${isLoading ? 'bg-neutral-400 border border-neutral-500' : 'bg-primary shadow-md'} w-full mt-16 py-5 btn`}
+                        className={`${
+                            isLoading
+                                ? "bg-neutral-400 border border-neutral-500"
+                                : "bg-primary shadow-md"
+                        } w-full mt-10 py-5 btn`}
                         disabled={isLoading}
-                        >
+                    >
                         <ThemedText
                             content="Sign In"
-                            className={`${isLoading ? 'text-neutral-700' : 'text-white'} font-medium text-xl`}
+                            className={`${
+                                isLoading ? "text-neutral-700" : "text-white"
+                            } font-medium text-xl`}
                         />
                     </TouchableOpacity>
 

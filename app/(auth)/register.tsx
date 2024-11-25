@@ -6,16 +6,29 @@ import PasswordForm from "@/components/register/PasswordForm";
 import VerificationForm from "@/components/register/VerificationForm";
 import { router } from "expo-router";
 
+export type RegisterFormType = {
+    email: string;
+    username: string;
+    password: string;
+    confirmPassword: string;
+};
+
 export default function Register(): JSX.Element {
-    const [step, setStep] = useState<1 | 2 | 3>(1);
+    const [step, setStep] = useState<number>(1);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [form, setForm] = useState<RegisterFormType>({
+        email: "",
+        username: "",
+        password: "",
+        confirmPassword: "",
+    });
 
     const handleFirstForm = () => {
         setIsLoading(true);
         setTimeout(() => {
             setIsLoading(false);
             setStep(2);
-        }, 2000);
+        }, 1000);
     };
 
     const handleGoBack = () => {
@@ -27,7 +40,7 @@ export default function Register(): JSX.Element {
         setTimeout(() => {
             setIsLoading(false);
             setStep(3);
-        }, 2000);
+        }, 1000);
     };
 
     const handlePasswordForm = () => {
@@ -35,7 +48,7 @@ export default function Register(): JSX.Element {
         setTimeout(() => {
             setIsLoading(false);
             router.replace("/home");
-        }, 2000);
+        }, 1000);
     };
     return (
         <ThemedView isLoading={isLoading} className="items-center pt-20">
@@ -62,9 +75,12 @@ export default function Register(): JSX.Element {
                 </View>
             </View>
             {step === 1 ? (
-                <EmailForm 
+                <EmailForm
+                    form={form}
+                    setForm={setForm}
                     isLoading={isLoading}
-                    handleFirstForm={handleFirstForm} />
+                    handleFirstForm={handleFirstForm}
+                />
             ) : step === 2 ? (
                 <VerificationForm
                     isLoading={isLoading}
@@ -73,8 +89,11 @@ export default function Register(): JSX.Element {
                 />
             ) : (
                 <PasswordForm
+                    form={form}
+                    setForm={setForm}
                     isLoading={isLoading}
-                    handlePasswordForm={handlePasswordForm} />
+                    handlePasswordForm={handlePasswordForm}
+                />
             )}
         </ThemedView>
     );

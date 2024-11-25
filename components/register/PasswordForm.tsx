@@ -1,37 +1,49 @@
-import { TextInput, TouchableOpacity, View } from "react-native";
+import { ScrollView, TouchableOpacity, View } from "react-native";
+import { SetStateAction, Dispatch } from "react";
 import { ThemedText } from "../theme/ThemeUi";
+import { RegisterFormType } from "@/app/(auth)/register";
+import PasswordInput from "../inputs/PasswordInput";
 
 interface PasswordFormProps {
     handlePasswordForm: () => void;
     isLoading: boolean;
+    form: RegisterFormType;
+    setForm: Dispatch<SetStateAction<RegisterFormType>>;
 }
 
 export default function PasswordForm({
     handlePasswordForm,
     isLoading,
+    form,
+    setForm,
 }: PasswordFormProps): JSX.Element {
     return (
-        <>
-            <View className="px-5 w-full">
-                <View className="mt-7">
-                    <ThemedText content="Password" className="font-semibold" />
-                    <TextInput
-                        className="input leading-normal"
-                        placeholder="Enter your password"
-                        secureTextEntry={true}
-                    />
-                </View>
-                <View className="mt-7">
-                    <ThemedText
-                        content="Confirm Password"
-                        className="font-semibold"
-                    />
-                    <TextInput
-                        className="input leading-normal"
-                        placeholder="Confirm your password"
-                        secureTextEntry={true}
-                    />
-                </View>
+        <ScrollView contentContainerClassName="flex-grow">
+            <View className="px-5 w-full mt-10">
+                <ThemedText
+                    content="Create password"
+                    className="font-bold text-2xl"
+                />
+                <ThemedText
+                    content="Use a strong password with a mix of numbers, uppercase alphabets and special characters"
+                    className="text-neutral-400 mt-2"
+                />
+
+                <PasswordInput
+                    handleChangeText={(e) => setForm({ ...form, password: e })}
+                    label="Password"
+                    containerClassName="mt-5"
+                    placeholder="Enter your password"
+                    value={form.password}
+                />
+
+                <PasswordInput
+                    handleChangeText={(e) => setForm({ ...form, password: e })}
+                    label="Confirm Password"
+                    containerClassName="mt-7"
+                    placeholder="Confirm your password"
+                    value={form.confirmPassword}
+                />
             </View>
 
             <View className="flex-1 absolute bottom-20 w-full px-5 gap-y-4">
@@ -52,6 +64,6 @@ export default function PasswordForm({
                     />
                 </TouchableOpacity>
             </View>
-        </>
+        </ScrollView>
     );
 }
