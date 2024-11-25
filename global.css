@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container {
+    @apply flex-1 bg-white;
+}
+.center {
+    @apply items-center justify-center
+}
+.btn {
+    @apply rounded-full p-4 center;
+}
+.logo {
+    @apply text-4xl mt-3 text-neutral-800 font-bold;
+}
