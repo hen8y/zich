@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { Iconify } from "react-native-iconify";
 import { APP } from "@/constants";
 
@@ -8,13 +8,10 @@ export type TabsLayoutProps = {
     focused: boolean;
 };
 
-export default function TabsLayout(): JSX.Element
-{
+export default function TabsLayout(): JSX.Element {
     const TabIcons = ({ icon, focused }: TabsLayoutProps) => {
         return (
-            <View className="center rounded-full size-10 p-3">
-                {icon()}
-            </View>
+            <View className="center rounded-full size-10 p-3">{icon()}</View>
         );
     };
 
@@ -24,11 +21,11 @@ export default function TabsLayout(): JSX.Element
                 tabBarShowLabel: false,
                 tabBarStyle: {
                     backgroundColor: "#fff",
-                    height: 80,
                     width: "100%",
                     margin: "auto",
                     alignItems: "center",
                     paddingTop: 10,
+                    height: Platform.OS == "ios" ? 80 : 60,
                     justifyContent: "center",
                     borderTopColor: "#888",
                 },
@@ -41,15 +38,10 @@ export default function TabsLayout(): JSX.Element
                     title: "Home",
                     tabBarIcon: ({ focused }) => {
                         return (
-                            <TabIcons
-                                icon={() => (
-                                    <Iconify
-                                        icon="hugeicons:home-01"
-                                        size={20}
-                                        color={focused ? APP.PRIMARY_COLOR : "#555"}
-                                    />
-                                )}
-                                focused={focused}
+                            <Iconify
+                                icon="solar:home-angle-outline"
+                                size={20}
+                                color={focused ? APP.PRIMARY_COLOR : "#555"}
                             />
                         );
                     },
@@ -63,15 +55,10 @@ export default function TabsLayout(): JSX.Element
                     title: "Profile",
                     tabBarIcon: ({ focused }) => {
                         return (
-                            <TabIcons
-                                icon={() => (
-                                    <Iconify
-                                        icon="solar:user-outline"
-                                        size={20}
-                                        color={focused ? APP.PRIMARY_COLOR : "#555"}
-                                    />
-                                )}
-                                focused={focused}
+                            <Iconify
+                                icon="solar:user-outline"
+                                size={20}
+                                color={focused ? APP.PRIMARY_COLOR : "#555"}
                             />
                         );
                     },

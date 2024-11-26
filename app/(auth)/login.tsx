@@ -1,6 +1,7 @@
 import { CustomTextInput, PasswordInput } from "@/components/inputs";
 import { ThemedText } from "@/components/theme";
 import { AuthThemedView } from "@/components/theme/auth-theme-view";
+import { Button } from "@/components/ui";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
@@ -14,11 +15,7 @@ export default function Login(): JSX.Element {
     });
 
     const handleLogin = () => {
-        setIsLoading(true);
-        setTimeout(() => {
-            setIsLoading(false);
-            router.replace("/home");
-        }, 2000);
+        router.replace("/home");
     };
 
     return (
@@ -48,29 +45,20 @@ export default function Login(): JSX.Element {
                         placeholder="Enter your password"
                         value={form.password}
                     />
-                    <Link href={"/forgot-password"} className="mt-2 ml-auto">
+                    <Link
+                        href={"/forgot-password"}
+                        className="mt-2 mb-10 ml-auto"
+                    >
                         <ThemedText
                             className="text-primary font-semibold"
                             content="Forgot Password?"
                         />
                     </Link>
-                    <TouchableOpacity
-                        onPress={handleLogin}
-                        className={`${
-                            isLoading
-                                ? "bg-neutral-400 border border-neutral-500"
-                                : "bg-primary shadow-md"
-                        } w-full mt-10 py-5 btn`}
-                        disabled={isLoading}
-                    >
-                        <ThemedText
-                            content="Sign In"
-                            className={`${
-                                isLoading ? "text-neutral-700" : "text-white"
-                            } font-medium text-xl`}
-                        />
-                    </TouchableOpacity>
-
+                    <Button
+                        handleOnPress={handleLogin}
+                        content="Sign in"
+                        isLoading={isLoading}
+                    />
                     <View className="gap-2 my-8 flex-row items-center justify-center">
                         <View className="h-[1px] flex-1 bg-zinc-300" />
                         <ThemedText>Or continue using</ThemedText>

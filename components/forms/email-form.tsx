@@ -6,6 +6,7 @@ import { ScrollView, TouchableOpacity, View } from "react-native";
 
 import { CustomTextInput, RoundedCheckbox } from "../inputs";
 import { ThemedText } from "../theme";
+import { Button } from "../ui";
 
 interface EmailFormProps {
     handleFirstForm: () => void;
@@ -46,22 +47,11 @@ export default function EmailForm({
             {!isKeyboardVisible && (
                 <View className="mb-10 w-full px-5 gap-y-4">
                     <RoundedCheckbox label="I accept the terms and privacy policy" />
-                    <TouchableOpacity
-                        onPress={handleFirstForm}
-                        className={`${
-                            isLoading
-                                ? "bg-neutral-400 border border-neutral-500"
-                                : "bg-primary shadow-md"
-                        } w-full py-5 btn`}
-                        disabled={isLoading}
-                    >
-                        <ThemedText
-                            content="Proceed"
-                            className={`${
-                                isLoading ? "text-neutral-700" : "text-white"
-                            } font-medium text-xl`}
-                        />
-                    </TouchableOpacity>
+                    <Button
+                        handleOnPress={handleFirstForm}
+                        content="Proceed"
+                        isLoading={isLoading}
+                    />
                     <View className="center flex-row gap-x-1">
                         <ThemedText content="Already have an account?" />
                         <TouchableOpacity

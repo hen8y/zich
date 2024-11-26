@@ -5,6 +5,7 @@ import { Keyboard, ScrollView, TouchableOpacity, View } from "react-native";
 
 import { PasswordInput } from "../inputs";
 import { ThemedText } from "../theme";
+import { Button } from "../ui";
 
 interface PasswordFormProps {
     handlePasswordForm: () => void;
@@ -53,23 +54,12 @@ export default function PasswordForm({
             </ScrollView>
 
             {!isKeyboardVisible && (
-                <View className="mb-10 w-full px-5 gap-y-4">
-                    <TouchableOpacity
-                        onPress={handlePasswordForm}
-                        className={`${
-                            isLoading
-                                ? "bg-neutral-400 border border-neutral-500"
-                                : "bg-primary shadow-md"
-                        } w-full mt-16 py-5 btn`}
-                        disabled={isLoading}
-                    >
-                        <ThemedText
-                            content="Sign Up"
-                            className={`${
-                                isLoading ? "text-neutral-700" : "text-white"
-                            } font-medium text-xl`}
-                        />
-                    </TouchableOpacity>
+                <View className="mb-10 w-full px-5 gap-y-4 pb-16">
+                    <Button
+                        handleOnPress={handlePasswordForm}
+                        content="Proceed"
+                        isLoading={isLoading}
+                    />
                 </View>
             )}
         </>

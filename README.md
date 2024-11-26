@@ -1,5 +1,7 @@
-- Expo
-- ReactNative
-- react-native-loading-spinner-overlay
-- iconify
-- nativewind/tailwindcss
+-   Expo
+-   ReactNative
+-   react-native-loading-spinner-overlay
+-   iconify
+-   nativewind/tailwindcss
+-   react-native-notifier
+-   react-native-picker/picker

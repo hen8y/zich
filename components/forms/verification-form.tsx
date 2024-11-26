@@ -9,6 +9,7 @@ import {
 
 import { OTPInput } from "../inputs";
 import { ThemedText } from "../theme";
+import { Button } from "../ui";
 
 interface VerificationFormProps {
     handleVerificationForm: () => void;
@@ -64,23 +65,12 @@ export default function VerificationForm({
                             className="text-primary font-medium text-xl"
                         />
                     </TouchableOpacity>
-
-                    <TouchableOpacity
-                        onPress={handleVerificationForm}
-                        className={`${
-                            isLoading
-                                ? "bg-neutral-400 border border-neutral-500"
-                                : "bg-primary shadow-md"
-                        } flex-1 py-5 btn`}
-                        disabled={isLoading}
-                    >
-                        <ThemedText
-                            content="Proceed"
-                            className={`${
-                                isLoading ? "text-neutral-700" : "text-white"
-                            } font-medium text-xl`}
-                        />
-                    </TouchableOpacity>
+                    <Button
+                        handleOnPress={handleVerificationForm}
+                        content="Proceed"
+                        className="flex-1"
+                        isLoading={isLoading}
+                    />
                 </View>
             )}
         </KeyboardAvoidingView>
