@@ -9,6 +9,7 @@ interface CustomTextInputProps {
     containerClassName?: string;
     hideLabel?: boolean;
     inputClassName?: string;
+    borderBottom?: boolean;
 }
 
 export default function CustomTextInput({
@@ -19,6 +20,7 @@ export default function CustomTextInput({
     containerClassName,
     inputClassName,
     hideLabel = false,
+    borderBottom = true,
 }: CustomTextInputProps): JSX.Element {
     return (
         <View className={`w-full ${containerClassName}`}>
@@ -30,7 +32,10 @@ export default function CustomTextInput({
                 placeholder={placeholder || ""}
                 value={value}
                 placeholderTextColor={"#aaa"}
-                className={`input ${inputClassName || ""}`}
+                className={`
+                    ${borderBottom ? "ghost-input" : "input"}
+                    ${inputClassName || ""}
+                `}
             />
         </View>
     );

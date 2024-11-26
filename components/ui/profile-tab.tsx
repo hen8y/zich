@@ -2,23 +2,23 @@ import { router } from "expo-router";
 import { Pressable, View } from "react-native";
 import { ThemedText } from "../theme";
 import { Iconify } from "react-native-iconify";
-import { ToggleInput } from "../inputs";
-import { Picker } from "@react-native-picker/picker";
+import { ToggleInput, SelectInput } from "../inputs";
 
-type ProfileTabType = {
+interface ProfileTabProps {
     name: string;
     details: any;
     icon: JSX.Element;
     type: string;
     action?: () => void;
-};
+}
+
 export default function ProfileTab({
     name,
     details,
     icon,
     type,
     action,
-}: ProfileTabType): JSX.Element {
+}: ProfileTabProps): JSX.Element {
     const DetailsContainer = () => {
         if (type === "link") {
             return (
@@ -31,12 +31,7 @@ export default function ProfileTab({
         } else if (type === "toggle") {
             return action ? <ToggleInput handleToggle={action} /> : null;
         } else {
-            return (
-                <Picker selectedValue={"Java"} onValueChange={action}>
-                    <Picker.Item label="Java" value="java" />
-                    <Picker.Item label="JavaScript" value="js" />
-                </Picker>
-            );
+            return action ? <SelectInput /> : null;
         }
     };
 

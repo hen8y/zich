@@ -1,12 +1,12 @@
 import { TouchableOpacity } from "react-native";
 import { ThemedText } from "../theme";
 
-type ButtonProps = {
+interface ButtonProps {
     content: string;
     isLoading: boolean;
     handleOnPress: () => void;
     className?: string;
-};
+}
 
 export function Button({
     content,

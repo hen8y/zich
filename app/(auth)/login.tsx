@@ -32,7 +32,7 @@ export default function Login(): JSX.Element {
                 <View className="mt-10">
                     <CustomTextInput
                         handleChangeText={(e) => setForm({ ...form, email: e })}
-                        label="Password"
+                        label="Email"
                         placeholder="Your email"
                         value={form.email}
                     />

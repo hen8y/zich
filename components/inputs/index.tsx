@@ -3,6 +3,7 @@ import PasswordInput from "./password-input";
 import CustomTextInput from "./custom-text-input";
 import RoundedCheckbox from "./rounded-checkbox";
 import ToggleInput from "./toggle-input";
+import SelectInput from "./select-input";
 
 export {
     OTPInput,
@@ -10,4 +11,5 @@ export {
     CustomTextInput,
     RoundedCheckbox,
     ToggleInput,
+    SelectInput,
 };
