@@ -20,7 +20,7 @@ export default function ForgotPassword(): JSX.Element {
     };
 
     return (
-        <AuthThemedView isLoading={isLoading} className="items-center pt-20">
+        <AuthThemedView isLoading={isLoading} className="items-center pt-10">
             <ScrollView contentContainerClassName="flex-grow">
                 <View className="size-20 mx-auto rounded-full p-3 bg-neutral-200 center">
                     <Image source={require("@/assets/images/logo.png")} />

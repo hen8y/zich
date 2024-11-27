@@ -1,26 +1,60 @@
 import { RegisterFormType } from "@/app/(auth)/register";
 import useKeyboard from "@/hooks/use-keyboard";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Keyboard, ScrollView, TouchableOpacity, View } from "react-native";
+import { Dispatch, SetStateAction, useState } from "react";
+import { ScrollView, View } from "react-native";
 
 import { PasswordInput } from "../inputs";
 import { ThemedText } from "../theme";
 import { Button } from "../ui";
 
 interface PasswordFormProps {
-    handlePasswordForm: () => void;
+    onComplete: () => void;
     isLoading: boolean;
     form: RegisterFormType;
     setForm: Dispatch<SetStateAction<RegisterFormType>>;
 }
 
 export default function PasswordForm({
-    handlePasswordForm,
+    onComplete,
     isLoading,
     form,
     setForm,
 }: PasswordFormProps): JSX.Element {
     const isKeyboardVisible = useKeyboard();
+    const [formError, setFormError] = useState<{
+        password: string;
+        confirmPassword: string;
+    }>({
+        password: "",
+        confirmPassword: "",
+    });
+
+    const handleSubmit = () => {
+        const passwordError =
+            form.password.trim() === "" ? "Please enter password" : "";
+        const confirmPasswordError =
+            form.password.trim() === "" ? "Please confirm password" : "";
+
+        if (passwordError || confirmPasswordError) {
+            setFormError({
+                password: passwordError,
+                confirmPassword: confirmPasswordError,
+            });
+            return;
+        }
+        if (form.password !== form.confirmPassword) {
+            setFormError({
+                password: "",
+                confirmPassword: "Passwords do not match",
+            });
+            return;
+        }
+        setFormError({
+            password: "",
+            confirmPassword: "",
+        });
+        onComplete();
+    };
     return (
         <>
             <ScrollView
@@ -42,21 +76,25 @@ export default function PasswordForm({
                     containerClassName="mt-5"
                     placeholder="Enter your password"
                     value={form.password}
+                    error={formError.password}
                 />
 
                 <PasswordInput
-                    handleChangeText={(e) => setForm({ ...form, password: e })}
+                    handleChangeText={(e) =>
+                        setForm({ ...form, confirmPassword: e })
+                    }
                     label="Confirm Password"
                     containerClassName="mt-7"
                     placeholder="Confirm your password"
                     value={form.confirmPassword}
+                    error={formError.confirmPassword}
                 />
             </ScrollView>
 
             {!isKeyboardVisible && (
                 <View className="mb-10 w-full px-5 gap-y-4 pb-16">
                     <Button
-                        handleOnPress={handlePasswordForm}
+                        onPress={handleSubmit}
                         content="Proceed"
                         isLoading={isLoading}
                     />

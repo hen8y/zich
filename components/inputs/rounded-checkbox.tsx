@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { TouchableOpacity, View, Animated } from "react-native";
+import { Animated, TouchableOpacity, View } from "react-native";
 import { Iconify } from "react-native-iconify";
+
 import { ThemedText } from "../theme";
 
 interface RoundedCheckboxProps {
     checked?: boolean;
     label: string;
+    error?: string;
     onChange?: (checked: boolean) => void;
 }
 
@@ -13,6 +15,7 @@ export default function RoundedCheckbox({
     checked: controlledChecked,
     onChange,
     label = "",
+    error,
 }: RoundedCheckboxProps): JSX.Element {
     const [internalChecked, setInternalChecked] = useState(false);
     const [scaleAnim] = useState(new Animated.Value(0));
@@ -48,7 +51,9 @@ export default function RoundedCheckbox({
                 className={`size-6 rounded-full border border-secondary items-center justify-center ${
                     isChecked
                         ? "bg-primary border-primary"
-                        : "bg-white border-secondary"
+                        : `bg-white ${
+                              error ? "border-red-300" : "border-secondary"
+                          }`
                 }`}
             >
                 <Animated.View

@@ -1,7 +1,7 @@
 import { RegisterFormType } from "@/app/(auth)/register";
 import useKeyboard from "@/hooks/use-keyboard";
 import { router } from "expo-router";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 
 import { CustomTextInput, RoundedCheckbox } from "../inputs";
@@ -9,19 +9,54 @@ import { ThemedText } from "../theme";
 import { Button } from "../ui";
 
 interface EmailFormProps {
-    handleFirstForm: () => void;
+    onComplete: () => void;
     isLoading: boolean;
     form: RegisterFormType;
     setForm: Dispatch<SetStateAction<RegisterFormType>>;
 }
 
 export default function EmailForm({
-    handleFirstForm,
+    onComplete,
     isLoading,
     form,
     setForm,
 }: EmailFormProps): JSX.Element {
     const isKeyboardVisible = useKeyboard();
+    const [termsIsChecked, setTermsIsChecked] = useState<boolean>(false);
+    const [formError, setFormError] = useState<{
+        email: string;
+        username: string;
+        checkbox: string;
+    }>({
+        email: "",
+        username: "",
+        checkbox: "",
+    });
+
+    const handleSubmit = () => {
+        const emailError =
+            form.email.trim() === ""
+                ? "Please enter email address"
+                : !/\S+@\S+\.\S+/.test(form.email)
+                ? "Invalid email address"
+                : "";
+        const usernameError =
+            form.username.trim() === "" ? "Please enter a username" : "";
+        if (emailError || usernameError || !termsIsChecked) {
+            setFormError({
+                checkbox: "Accept terms and policy",
+                email: emailError,
+                username: usernameError,
+            });
+            return;
+        }
+        setFormError({
+            checkbox: "",
+            email: "",
+            username: "",
+        });
+        onComplete();
+    };
     return (
         <>
             <ScrollView
@@ -33,6 +68,7 @@ export default function EmailForm({
                     label="Username"
                     placeholder="Choose username"
                     value={form.username}
+                    error={formError.username}
                 />
 
                 <CustomTextInput
@@ -41,14 +77,19 @@ export default function EmailForm({
                     containerClassName="mt-7"
                     placeholder="Your email"
                     value={form.email}
+                    error={formError.email}
                 />
             </ScrollView>
 
             {!isKeyboardVisible && (
                 <View className="mb-10 w-full px-5 gap-y-4">
-                    <RoundedCheckbox label="I accept the terms and privacy policy" />
+                    <RoundedCheckbox
+                        error={formError.checkbox}
+                        onChange={(e) => setTermsIsChecked(e)}
+                        label="I accept the terms and privacy policy"
+                    />
                     <Button
-                        handleOnPress={handleFirstForm}
+                        onPress={handleSubmit}
                         content="Proceed"
                         isLoading={isLoading}
                     />

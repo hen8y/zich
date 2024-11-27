@@ -1,11 +1,11 @@
-import { ThemedText, ThemedView } from "@/components/theme";
-import { useState } from "react";
-import { Image, View } from "react-native";
 import EmailForm from "@/components/forms/email-form";
 import PasswordForm from "@/components/forms/password-form";
 import VerificationForm from "@/components/forms/verification-form";
-import { router } from "expo-router";
+import { ThemedText } from "@/components/theme";
 import { AuthThemedView } from "@/components/theme/auth-theme-view";
+import { router } from "expo-router";
+import { useState } from "react";
+import { Image, View } from "react-native";
 
 export type RegisterFormType = {
     email: string;
@@ -43,7 +43,7 @@ export default function Register(): JSX.Element {
         }, 1000);
     };
 
-    const handlePasswordForm = () => {
+    const handleSignUp = () => {
         setIsLoading(true);
         setTimeout(() => {
             setIsLoading(false);
@@ -79,20 +79,20 @@ export default function Register(): JSX.Element {
                     form={form}
                     setForm={setForm}
                     isLoading={isLoading}
-                    handleFirstForm={handleFirstForm}
+                    onComplete={handleFirstForm}
                 />
             ) : step === 2 ? (
                 <VerificationForm
                     isLoading={isLoading}
-                    handleVerificationForm={handleVerificationForm}
-                    handleGoBack={handleGoBack}
+                    onComplete={handleVerificationForm}
+                    onExit={handleGoBack}
                 />
             ) : (
                 <PasswordForm
                     form={form}
                     setForm={setForm}
                     isLoading={isLoading}
-                    handlePasswordForm={handlePasswordForm}
+                    onComplete={handleSignUp}
                 />
             )}
         </AuthThemedView>

@@ -1,22 +1,23 @@
 import { TouchableOpacity } from "react-native";
+
 import { ThemedText } from "../theme";
 
 interface ButtonProps {
     content: string;
     isLoading: boolean;
-    handleOnPress: () => void;
+    onPress: () => void;
     className?: string;
 }
 
 export function Button({
     content,
     isLoading,
-    handleOnPress,
+    onPress,
     className,
 }: ButtonProps): JSX.Element {
     return (
         <TouchableOpacity
-            onPress={handleOnPress}
+            onPress={onPress}
             className={`${
                 isLoading
                     ? "bg-neutral-400 border border-neutral-500"

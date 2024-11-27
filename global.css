@@ -18,10 +18,10 @@
     @apply text-4xl mt-3 text-neutral-800 font-bold;
 }
 .input {
-    @apply px-5 border mt-2 focus:border-primary/50 leading-[0] text-neutral-800 bg-white border-neutral-300 h-16 rounded-lg;
+    @apply px-5 border mt-2 leading-[0] text-neutral-800 bg-white h-16 rounded-lg;
 }
 .ghost-input {
-    @apply pb-4 pt-1 border-b focus:border-primary/50 text-neutral-800 bg-white border-neutral-300;
+    @apply pb-4 pt-1 border-b text-neutral-800 bg-white;
 }
 .input-label {
     @apply font-semibold;

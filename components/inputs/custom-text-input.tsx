@@ -1,4 +1,5 @@
-import { View, TextInput } from "react-native";
+import { TextInput, View } from "react-native";
+
 import { ThemedText } from "../theme";
 
 interface CustomTextInputProps {
@@ -10,6 +11,7 @@ interface CustomTextInputProps {
     hideLabel?: boolean;
     inputClassName?: string;
     borderBottom?: boolean;
+    error?: string | null;
 }
 
 export default function CustomTextInput({
@@ -20,7 +22,8 @@ export default function CustomTextInput({
     containerClassName,
     inputClassName,
     hideLabel = false,
-    borderBottom = true,
+    borderBottom = false,
+    error,
 }: CustomTextInputProps): JSX.Element {
     return (
         <View className={`w-full ${containerClassName}`}>
@@ -35,6 +38,11 @@ export default function CustomTextInput({
                 className={`
                     ${borderBottom ? "ghost-input" : "input"}
                     ${inputClassName || ""}
+                    ${
+                        error
+                            ? "border-red-300"
+                            : "border-neutral-300 focus:border-primary/50 "
+                    }
                 `}
             />
         </View>

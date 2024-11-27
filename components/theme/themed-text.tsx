@@ -1,8 +1,8 @@
-import { Text, type TextProps } from "react-native";
+import { Text, TextProps } from "react-native";
 
 type ThemedTextProps = TextProps & {
     className?: string;
-    content?: string;
+    content?: string | null;
 };
 
 export function ThemedText({

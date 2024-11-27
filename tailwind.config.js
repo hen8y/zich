@@ -1,7 +1,8 @@
-/** @type {import('tailwindcss').Config} */
+/** @type { hairlineWidth } */
 import {
     hairlineWidth
 } from 'nativewind/theme';
+
 import {
     APP
 } from './constants';
@@ -25,4 +26,5 @@ module.exports = {
         },
     },
     plugins: [],
+    darkMode: 'class'
 }

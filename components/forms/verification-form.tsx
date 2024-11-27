@@ -1,4 +1,5 @@
 import useKeyboard from "@/hooks/use-keyboard";
+import { useState } from "react";
 import {
     KeyboardAvoidingView,
     Platform,
@@ -12,17 +13,28 @@ import { ThemedText } from "../theme";
 import { Button } from "../ui";
 
 interface VerificationFormProps {
-    handleVerificationForm: () => void;
-    handleGoBack: () => void;
+    onComplete: () => void;
+    onExit: () => void;
     isLoading: boolean;
 }
 
 export default function VerificationForm({
-    handleVerificationForm,
-    handleGoBack,
+    onComplete,
+    onExit,
     isLoading,
 }: VerificationFormProps): JSX.Element {
     const isKeyboardVisible = useKeyboard();
+    const [code, setCode] = useState<string>("");
+    const [codeError, setCodeError] = useState<string>("");
+
+    const handleOnPress = () => {
+        if (code.trim() === "" || code.trim().length !== 4) {
+            setCodeError("Enter Code");
+            return;
+        }
+        setCodeError("");
+        onComplete();
+    };
 
     return (
         <KeyboardAvoidingView
@@ -42,7 +54,7 @@ export default function VerificationForm({
                     content="We sent a code to your email"
                     className="text-neutral-400 mt-2"
                 />
-                <OTPInput />
+                <OTPInput error={codeError} onComplete={(e) => setCode(e)} />
                 <View className="flex-row gap-x-1 mt-5">
                     <ThemedText content="Didn't get the code?" />
                     <TouchableOpacity>
@@ -57,7 +69,7 @@ export default function VerificationForm({
             {!isKeyboardVisible && (
                 <View className="mb-10 mt-16 flex-row w-full px-5 gap-x-4">
                     <TouchableOpacity
-                        onPress={handleGoBack}
+                        onPress={onExit}
                         className="bg-secondary w-36 py-5 btn border border-neutral-300"
                     >
                         <ThemedText
@@ -66,7 +78,7 @@ export default function VerificationForm({
                         />
                     </TouchableOpacity>
                     <Button
-                        handleOnPress={handleVerificationForm}
+                        onPress={handleOnPress}
                         content="Proceed"
                         className="flex-1"
                         isLoading={isLoading}

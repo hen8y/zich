@@ -2,6 +2,7 @@ import { CustomTextInput, PasswordInput } from "@/components/inputs";
 import { ThemedText } from "@/components/theme";
 import { AuthThemedView } from "@/components/theme/auth-theme-view";
 import { Button } from "@/components/ui";
+import { supabase } from "@/lib/supabase";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
@@ -13,9 +14,51 @@ export default function Login(): JSX.Element {
         email: "",
         password: "",
     });
+    const [formError, setFormError] = useState<{
+        email: string;
+        password: string;
+    }>({
+        email: "",
+        password: "",
+    });
 
-    const handleLogin = () => {
-        router.replace("/home");
+    const handleInputChange = (type: string, text: string) => {
+        const error = text.trim() === "" ? `Please enter your ${type}` : "";
+
+        if (type === "email") {
+            setForm({ ...form, email: text });
+            setFormError({ ...formError, email: error });
+        } else {
+            setForm({ ...form, password: text });
+            setFormError({ ...formError, email: error });
+        }
+    };
+
+    const handleLogin = async () => {
+        const emailError =
+            form.email.trim() === ""
+                ? "Please enter your email"
+                : !/\S+@\S+\.\S+/.test(form.email)
+                ? "Invalid email address"
+                : "";
+        const passwordError =
+            form.password.trim() === "" ? "Please enter your password" : "";
+
+        if (emailError || passwordError) {
+            setFormError({ email: emailError, password: passwordError });
+            return;
+        }
+        setIsLoading(true);
+        const { error } = await supabase.auth.signInWithPassword(form);
+
+        if (error) {
+            alert(error.message);
+            setFormError({
+                email: "Error Logging in",
+                password: "Error Logging in",
+            });
+        }
+        setIsLoading(false);
     };
 
     return (
@@ -31,19 +74,21 @@ export default function Login(): JSX.Element {
 
                 <View className="mt-10">
                     <CustomTextInput
-                        handleChangeText={(e) => setForm({ ...form, email: e })}
+                        handleChangeText={(e) => handleInputChange("email", e)}
                         label="Email"
                         placeholder="Your email"
                         value={form.email}
+                        error={formError.email}
                     />
                     <PasswordInput
                         handleChangeText={(e) =>
-                            setForm({ ...form, password: e })
+                            handleInputChange("password", e)
                         }
                         label="Password"
                         containerClassName="mt-7"
                         placeholder="Enter your password"
                         value={form.password}
+                        error={formError.password}
                     />
                     <Link
                         href={"/forgot-password"}
@@ -55,7 +100,7 @@ export default function Login(): JSX.Element {
                         />
                     </Link>
                     <Button
-                        handleOnPress={handleLogin}
+                        onPress={handleLogin}
                         content="Sign in"
                         isLoading={isLoading}
                     />

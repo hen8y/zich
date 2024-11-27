@@ -1,7 +1,8 @@
-import { View, TextInput, Pressable } from "react-native";
-import { ThemedText } from "../theme";
 import { useState } from "react";
+import { Pressable, TextInput, View } from "react-native";
 import { Iconify } from "react-native-iconify";
+
+import { ThemedText } from "../theme";
 
 interface PasswordInputProps {
     label: string;
@@ -11,6 +12,7 @@ interface PasswordInputProps {
     containerClassName?: string;
     hideLabel?: boolean;
     inputClassName?: string;
+    error?: string;
 }
 
 export default function PasswordInput({
@@ -21,6 +23,7 @@ export default function PasswordInput({
     containerClassName,
     inputClassName,
     hideLabel = false,
+    error = "",
 }: PasswordInputProps): JSX.Element {
     const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true);
 
@@ -41,9 +44,15 @@ export default function PasswordInput({
                     placeholder={placeholder || ""}
                     value={value}
                     placeholderTextColor={"#aaa"}
-                    className={`input rounded-r-none flex-1 ${
-                        inputClassName || ""
-                    }`}
+                    className={`
+                        input rounded-r-none flex-1 
+                        ${inputClassName || ""}
+                        ${
+                            error
+                                ? "border-red-300 focus:border-primary/50"
+                                : "border-neutral-300 focus:border-primary/50 "
+                        }
+                    `}
                     secureTextEntry={secureTextEntry}
                 />
                 <View className="size-16 mt-2 rounded-r-lg center border-neutral-300 border-l-0 border">
