@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { View, Image, TouchableOpacity, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { updateAvi } from "@/lib/auth";
+import { ProfileFormType } from "@/app/(tabs)/profile";
 
 export default function CustomImagePicker({
     defaultImage,
+    onUpdate,
 }: {
     defaultImage: any;
+    onUpdate: Dispatch<SetStateAction<ProfileFormType>>;
 }): JSX.Element {
     const [image, setImage] = useState<string>(defaultImage);
 
@@ -32,6 +35,10 @@ export default function CustomImagePicker({
         if (!result.canceled && result.assets && result.assets.length > 0) {
             const selectedImage = result.assets[0].uri;
             setImage(selectedImage);
+            onUpdate((prevState) => ({
+                ...prevState,
+                avi: selectedImage,
+            }));
             updateAvi(selectedImage);
         }
     };

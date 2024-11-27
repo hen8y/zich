@@ -1,4 +1,4 @@
-import { RefObject, useState } from "react";
+import { Dispatch, RefObject, SetStateAction, useState } from "react";
 import ActionSheet, { ActionSheetRef } from "react-native-actions-sheet";
 import ActionSheetHeader from "./action-sheet-header";
 import {
@@ -12,19 +12,37 @@ import { CustomTextInput } from "../inputs";
 import { ThemedText } from "../theme/themed-text";
 import CustomImagePicker from "./custom-image-picker";
 import { ProfileFormType } from "@/app/(tabs)/profile";
+import { updateUsernameAndEmail } from "@/lib/auth";
 
 interface ProfileTabProps {
     actionSheetRef: RefObject<ActionSheetRef>;
     profileForm: ProfileFormType;
+    setProfileForm: Dispatch<SetStateAction<ProfileFormType>>;
 }
 
 export default function ProfileEditSheet({
     actionSheetRef,
     profileForm,
+    setProfileForm,
 }: ProfileTabProps): JSX.Element {
-    const [form, setForm] = useState<{ username: string; email: string }>({
+    const [form, setForm] = useState<ProfileFormType>({
         ...profileForm,
     });
+
+    const handleOnComplete = () => {
+        actionSheetRef.current?.hide();
+        if (
+            form.username !== profileForm.username ||
+            form.email !== profileForm.email
+        ) {
+            updateUsernameAndEmail(form.username, form.email);
+            setProfileForm((prevState) => ({
+                ...prevState,
+                ...form,
+                avi: prevState.avi,
+            }));
+        }
+    };
 
     return (
         <ActionSheet
@@ -37,7 +55,7 @@ export default function ProfileEditSheet({
         >
             <ActionSheetHeader
                 onCancel={() => actionSheetRef.current?.hide()}
-                onComplete={() => actionSheetRef.current?.hide()}
+                onComplete={handleOnComplete}
                 title="Edit Profile"
             />
 
@@ -61,6 +79,7 @@ export default function ProfileEditSheet({
                                 />
                                 <CustomImagePicker
                                     defaultImage={profileForm.avi}
+                                    onUpdate={setProfileForm}
                                 />
                             </View>
 

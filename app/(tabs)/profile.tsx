@@ -96,6 +96,7 @@ export default function Profile() {
             <ProfileEditSheet
                 profileForm={profileForm}
                 actionSheetRef={actionSheetRef}
+                setProfileForm={setProfileForm}
             />
         </ThemedView>
     );

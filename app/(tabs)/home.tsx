@@ -1,6 +1,6 @@
 import { ThemedText, ThemedView } from "@/components/theme";
 import { ExternalLink } from "@/components/ui";
-import { router } from "expo-router";
+import { logoutUser } from "@/lib/auth";
 import { Pressable, View } from "react-native";
 
 export default function Home() {
@@ -21,7 +21,7 @@ export default function Home() {
                 </Pressable>
             </View>
             <Pressable
-                onPress={() => router.replace("/")}
+                onPress={logoutUser}
                 className="mt-5 p-2 px-4 bg-white border border-neutral-200 rounded-lg"
             >
                 <ThemedText

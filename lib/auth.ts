@@ -1,5 +1,6 @@
 import { ProfileFormType } from "@/app/(tabs)/profile";
 import { supabase } from "./supabase";
+import { router } from "expo-router";
 
 export const signUpWithEmail = async (
     email: string,
@@ -124,4 +125,9 @@ export const updateUsernameAndEmail = async (
     } catch (error) {
         console.error("Error updating username or email");
     }
+};
+
+export const logoutUser = () => {
+    supabase.auth.signOut();
+    router.replace("/");
 };
