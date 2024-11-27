@@ -34,7 +34,8 @@ export const signUpWithEmail = async (
 };
 
 export const fetchProfile = async (
-    setProfileForm: (profileForm: ProfileFormType) => void
+    setProfileForm: (profileForm: ProfileFormType) => void,
+    setLoading: (loading: boolean) => void // Add setLoading
 ) => {
     try {
         const { data: user, error } = await supabase.auth.getUser();
@@ -52,16 +53,21 @@ export const fetchProfile = async (
 
             if (profileError) {
                 console.error("Error getting user:", profileError.message);
-                throw error;
+                throw profileError;
             }
             setProfileForm({
                 username: data.username,
                 email: user.user.email || "",
-                avi: data.avi || require("@/assets/images/avatars/1.png"),
+                avi:
+                    data.avi.trim() !== ""
+                        ? require("@/assets/images/avatars/1.png")
+                        : data.avi || require("@/assets/images/avatars/1.png"),
             });
         }
     } catch (error) {
-        console.error("Error fetching profile:");
+        console.error("Error fetching profile:", error);
+    } finally {
+        setLoading(false); // Set loading to false after fetch
     }
 };
 

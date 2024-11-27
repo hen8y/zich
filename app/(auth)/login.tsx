@@ -34,7 +34,7 @@ export default function Login(): JSX.Element {
             setFormError({ ...formError, email: error });
         } else {
             setForm({ ...form, password: text });
-            setFormError({ ...formError, email: error });
+            setFormError({ ...formError, password: error });
         }
     };
 

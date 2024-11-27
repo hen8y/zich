@@ -29,8 +29,42 @@ export default function ProfileEditSheet({
         ...profileForm,
     });
 
+    const [formError, setFormError] = useState<{
+        email: string;
+        username: string;
+    }>({
+        email: "",
+        username: "",
+    });
+
+    const handleInputChange = (type: string, text: string) => {
+        const error = text.trim() === "" ? `Please enter your ${type}` : "";
+
+        if (type === "email") {
+            setForm({ ...form, email: text });
+            setFormError({ ...formError, email: error });
+        } else {
+            setForm({ ...form, username: text });
+            setFormError({ ...formError, username: error });
+        }
+    };
+
     const handleOnComplete = () => {
+        const emailError =
+            form.email.trim() === ""
+                ? "Please enter your email"
+                : !/\S+@\S+\.\S+/.test(form.email)
+                ? "Invalid email address"
+                : "";
+        const usernameError =
+            form.username.trim() === "" ? "Please enter your username" : "";
+
+        if (emailError || usernameError) {
+            setFormError({ email: emailError, username: usernameError });
+            return;
+        }
         actionSheetRef.current?.hide();
+
         if (
             form.username !== profileForm.username ||
             form.email !== profileForm.email
@@ -69,13 +103,14 @@ export default function ProfileEditSheet({
                             <View className="flex-row w-full gap-x-5 space">
                                 <CustomTextInput
                                     handleChangeText={(e) =>
-                                        setForm({ ...form, username: e })
+                                        handleInputChange("username", e)
                                     }
                                     label="Username"
                                     containerClassName="flex-1"
                                     placeholder="Your username"
                                     value={form.username}
                                     borderBottom={true}
+                                    error={formError.username}
                                 />
                                 <CustomImagePicker
                                     defaultImage={profileForm.avi}
@@ -85,13 +120,14 @@ export default function ProfileEditSheet({
 
                             <CustomTextInput
                                 handleChangeText={(e) =>
-                                    setForm({ ...form, email: e })
+                                    handleInputChange("email", e)
                                 }
                                 label="Email"
                                 placeholder="Your email"
                                 value={form.email}
                                 borderBottom={true}
                                 containerClassName="mt-7"
+                                error={formError.email}
                             />
                             <ThemedText
                                 content="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis, itaque perferendis"

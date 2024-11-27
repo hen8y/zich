@@ -86,7 +86,7 @@ export default function PasswordForm({
                     label="Confirm Password"
                     containerClassName="mt-7"
                     placeholder="Confirm your password"
-                    value={form.confirmPassword}
+                    value={form.confirmPassword || ""}
                     error={formError.confirmPassword}
                 />
             </ScrollView>
