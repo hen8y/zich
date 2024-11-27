@@ -3,8 +3,13 @@ import { Image, TouchableOpacity, View } from "react-native";
 import { ThemedText, ThemedView } from "@/components/theme";
 import { router } from "expo-router";
 import { APP } from "@/constants";
+import { checkLoggedIn } from "@/hooks";
+import { useEffect } from "react";
 
 export default function Index(): JSX.Element {
+    useEffect(() => {
+        checkLoggedIn();
+    });
     return (
         <ThemedView className="pt-20 px-8 items-center">
             <View className="w-full absolute bottom-28 items-center">

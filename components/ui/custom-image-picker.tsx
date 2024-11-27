@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { View, Image, TouchableOpacity, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { updateAvi } from "@/lib/auth";
 
 export default function CustomImagePicker({
     defaultImage,
@@ -31,6 +32,7 @@ export default function CustomImagePicker({
         if (!result.canceled && result.assets && result.assets.length > 0) {
             const selectedImage = result.assets[0].uri;
             setImage(selectedImage);
+            updateAvi(selectedImage);
         }
     };
 
@@ -38,7 +40,7 @@ export default function CustomImagePicker({
         <View className="center mt-5">
             <TouchableOpacity onPress={selectImage}>
                 <Image
-                    source={{ uri: image }}
+                    source={typeof image === "string" ? { uri: image } : image}
                     className="size-16 rounded-full border border-neutral-300"
                 />
             </TouchableOpacity>

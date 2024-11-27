@@ -1,4 +1,4 @@
-import useKeyboard from "@/hooks/use-keyboard";
+import { useKeyboard } from "@/hooks";
 import { useState } from "react";
 import {
     KeyboardAvoidingView,

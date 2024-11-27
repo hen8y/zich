@@ -2,13 +2,17 @@ import { CustomTextInput, PasswordInput } from "@/components/inputs";
 import { ThemedText } from "@/components/theme";
 import { AuthThemedView } from "@/components/theme/auth-theme-view";
 import { Button } from "@/components/ui";
+import { checkLoggedIn } from "@/hooks";
 import { supabase } from "@/lib/supabase";
 import { Link, router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import { Iconify } from "react-native-iconify";
 
 export default function Login(): JSX.Element {
+    useEffect(() => {
+        checkLoggedIn();
+    });
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [form, setForm] = useState<{ email: string; password: string }>({
         email: "",

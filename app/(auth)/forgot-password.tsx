@@ -1,7 +1,7 @@
 import CustomTextInput from "@/components/inputs/custom-text-input";
 import { ThemedText } from "@/components/theme";
 import { AuthThemedView } from "@/components/theme/auth-theme-view";
-import useKeyboard from "@/hooks/use-keyboard";
+import { useKeyboard } from "@/hooks";
 import { router } from "expo-router";
 import { useState } from "react";
 import { Image, ScrollView, TouchableOpacity, View } from "react-native";

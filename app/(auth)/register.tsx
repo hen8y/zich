@@ -3,18 +3,23 @@ import PasswordForm from "@/components/forms/password-form";
 import VerificationForm from "@/components/forms/verification-form";
 import { ThemedText } from "@/components/theme";
 import { AuthThemedView } from "@/components/theme/auth-theme-view";
-import { router } from "expo-router";
-import { useState } from "react";
+import { checkLoggedIn } from "@/hooks";
+import { signUpWithEmail } from "@/lib/auth";
+import { useEffect, useState } from "react";
 import { Image, View } from "react-native";
 
 export type RegisterFormType = {
     email: string;
     username: string;
     password: string;
-    confirmPassword: string;
+    confirmPassword?: string;
 };
 
 export default function Register(): JSX.Element {
+    useEffect(() => {
+        checkLoggedIn();
+    });
+
     const [step, setStep] = useState<number>(1);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [form, setForm] = useState<RegisterFormType>({
@@ -23,33 +28,17 @@ export default function Register(): JSX.Element {
         password: "",
         confirmPassword: "",
     });
-    const handleFirstForm = () => {
+    const handleSignUp = async () => {
         setIsLoading(true);
-        setTimeout(() => {
+        try {
+            await signUpWithEmail(form.email, form.password, form.username);
+        } catch (error: any) {
+            alert(error.message || "An unknown error occurred.");
+        } finally {
             setIsLoading(false);
-            setStep(2);
-        }, 1000);
+        }
     };
 
-    const handleGoBack = () => {
-        setStep(1);
-    };
-
-    const handleVerificationForm = () => {
-        setIsLoading(true);
-        setTimeout(() => {
-            setIsLoading(false);
-            setStep(3);
-        }, 1000);
-    };
-
-    const handleSignUp = () => {
-        setIsLoading(true);
-        setTimeout(() => {
-            setIsLoading(false);
-            router.replace("/home");
-        }, 1000);
-    };
     return (
         <AuthThemedView isLoading={isLoading} className="items-center pt-20">
             <View className="size-20 mx-auto rounded-full p-3 bg-neutral-200 center">
@@ -79,13 +68,13 @@ export default function Register(): JSX.Element {
                     form={form}
                     setForm={setForm}
                     isLoading={isLoading}
-                    onComplete={handleFirstForm}
+                    onComplete={() => setStep(2)}
                 />
             ) : step === 2 ? (
                 <VerificationForm
                     isLoading={isLoading}
-                    onComplete={handleVerificationForm}
-                    onExit={handleGoBack}
+                    onComplete={() => setStep(3)}
+                    onExit={() => setStep(1)}
                 />
             ) : (
                 <PasswordForm

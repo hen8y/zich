@@ -1,12 +1,28 @@
 import { ThemedText, ThemedView } from "@/components/theme";
 import { ProfileEditSheet, ProfileTab } from "@/components/ui";
-import { useRef } from "react";
+import { fetchProfile } from "@/lib/auth";
+import { useEffect, useRef, useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import { ActionSheetRef } from "react-native-actions-sheet";
 import { Iconify } from "react-native-iconify";
 
+export type ProfileFormType = {
+    username: string;
+    email: string;
+    avi: any;
+};
+
 export default function Profile() {
     const actionSheetRef = useRef<ActionSheetRef>(null);
+    const [profileForm, setProfileForm] = useState<ProfileFormType>({
+        username: "",
+        email: "",
+        avi: "",
+    });
+
+    useEffect(() => {
+        fetchProfile(setProfileForm);
+    }, []);
 
     const profileTabLinks = [
         {
@@ -37,16 +53,20 @@ export default function Profile() {
             <View className="bg-white border flex-row space border-neutral-200 p-5 gap-y-7 rounded-2xl">
                 <View className="flex-row gap-2 items-center">
                     <Image
-                        source={require("@/assets/images/avatars/1.png")}
+                        source={
+                            typeof profileForm.avi === "string"
+                                ? { uri: profileForm.avi }
+                                : profileForm.avi
+                        }
                         className="size-16 rounded-full"
                     />
                     <View>
                         <ThemedText
-                            content="hen8y"
-                            className="text-3xl font-semibold"
+                            content={profileForm.username}
+                            className="text-2xl font-semibold"
                         />
                         <ThemedText
-                            content="hen8y@outlook.com"
+                            content={profileForm.email}
                             className="mt-1 text-neutral-400"
                         />
                     </View>
@@ -73,7 +93,10 @@ export default function Profile() {
                     />
                 ))}
             </View>
-            <ProfileEditSheet actionSheetRef={actionSheetRef} />
+            <ProfileEditSheet
+                profileForm={profileForm}
+                actionSheetRef={actionSheetRef}
+            />
         </ThemedView>
     );
 }

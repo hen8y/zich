@@ -1,5 +1,5 @@
 import { RegisterFormType } from "@/app/(auth)/register";
-import useKeyboard from "@/hooks/use-keyboard";
+import { useKeyboard } from "@/hooks";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ScrollView, View } from "react-native";
 

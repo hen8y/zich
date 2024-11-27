@@ -1,5 +1,5 @@
 import { RegisterFormType } from "@/app/(auth)/register";
-import useKeyboard from "@/hooks/use-keyboard";
+import { useKeyboard } from "@/hooks";
 import { router } from "expo-router";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
@@ -41,7 +41,7 @@ export default function EmailForm({
                 ? "Invalid email address"
                 : "";
         const usernameError =
-            form.username.trim() === "" ? "Please enter a username" : "";
+            form.username.trim() === "" ? "Please enter a name" : "";
         if (emailError || usernameError || !termsIsChecked) {
             setFormError({
                 checkbox: "Accept terms and policy",

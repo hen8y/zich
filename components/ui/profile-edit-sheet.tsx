@@ -11,17 +11,19 @@ import {
 import { CustomTextInput } from "../inputs";
 import { ThemedText } from "../theme/themed-text";
 import CustomImagePicker from "./custom-image-picker";
+import { ProfileFormType } from "@/app/(tabs)/profile";
 
 interface ProfileTabProps {
     actionSheetRef: RefObject<ActionSheetRef>;
+    profileForm: ProfileFormType;
 }
 
 export default function ProfileEditSheet({
     actionSheetRef,
+    profileForm,
 }: ProfileTabProps): JSX.Element {
-    const [form, setForm] = useState<{ name: string; email: string }>({
-        name: "hen8y",
-        email: "hen8y@outlook.com",
+    const [form, setForm] = useState<{ username: string; email: string }>({
+        ...profileForm,
     });
 
     return (
@@ -49,18 +51,16 @@ export default function ProfileEditSheet({
                             <View className="flex-row w-full gap-x-5 space">
                                 <CustomTextInput
                                     handleChangeText={(e) =>
-                                        setForm({ ...form, name: e })
+                                        setForm({ ...form, username: e })
                                     }
-                                    label="Name"
+                                    label="Username"
                                     containerClassName="flex-1"
-                                    placeholder="Your name"
-                                    value={form.name}
+                                    placeholder="Your username"
+                                    value={form.username}
                                     borderBottom={true}
                                 />
                                 <CustomImagePicker
-                                    defaultImage={
-                                        "@/assets/images/avatars/1.png"
-                                    }
+                                    defaultImage={profileForm.avi}
                                 />
                             </View>
 
